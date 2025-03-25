@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Chạy server
-CMD ["npm", "start"]
+CMD ["node", "index.js"]
 
 # Expose cổng server (giả sử backend chạy trên cổng 5000)
 EXPOSE 5000
