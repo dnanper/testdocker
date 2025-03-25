@@ -1,0 +1,26 @@
+# Sử dụng Node.js 22.14.0
+FROM node:22.14.0
+
+# Đặt thư mục làm việc
+WORKDIR /app
+
+# Copy package.json và package-lock.json trước
+COPY package*.json ./
+
+# Cài đặt dependencies
+RUN npm install
+
+# Copy toàn bộ mã nguồn vào container
+COPY . .
+
+# Build frontend
+RUN npm run build
+
+# Sử dụng nginx để phục vụ React app
+FROM nginx:alpine
+COPY --from=0 /app/build /usr/share/nginx/html
+
+# Expose cổng frontend (80)
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
